@@ -59,3 +59,18 @@ func SOFDecode(b [1]byte) (int, LFD, FOR, FA) {
 	fa := b[0] & 0x01
 	return int(status), LFD(lfd), FOR(p), FA(fa)
 }
+
+// QOSEncode 7.2.6.39
+func QOSEncode(ql int, e SOrE) [1]byte {
+	qlByte := byte(ql) << 1
+	eByte := byte(e)
+	union := qlByte & eByte
+	return [1]byte{union}
+}
+
+// QOSDecode 7.2.6.39
+func QOSDecode(b [1]byte) (ql int, e SOrE) {
+	ql = int(b[0] >> 1)
+	e = SOrE(b[0] & 0x01)
+	return ql, e
+}
