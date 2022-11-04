@@ -64,7 +64,7 @@ func SOFDecode(b [1]byte) (int, LFD, FOR, FA) {
 func QOSEncode(ql int, e SOrE) [1]byte {
 	qlByte := byte(ql) << 1
 	eByte := byte(e)
-	union := qlByte & eByte
+	union := qlByte | eByte
 	return [1]byte{union}
 }
 
@@ -73,4 +73,19 @@ func QOSDecode(b [1]byte) (ql int, e SOrE) {
 	ql = int(b[0] >> 1)
 	e = SOrE(b[0] & 0x01)
 	return ql, e
+}
+
+// SRQEncode 7.2.6.29
+func SRQEncode(ui7 UI7, bs BS) [1]byte {
+	ui7Byte := byte(ui7) << 1
+	bsByte := byte(bs)
+	union := ui7Byte | bsByte
+	return [1]byte{union}
+}
+
+// SRQDecode 7.2.6.29
+func SRQDecode(b [1]byte) (ui7 UI7, bs BS) {
+	ui7 = UI7(b[0] >> 1)
+	bs = BS(b[0] & 0x01)
+	return ui7, bs
 }

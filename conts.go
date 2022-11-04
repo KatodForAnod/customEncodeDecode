@@ -21,6 +21,13 @@ const (
 	SubstitutionYes SB = 1
 )
 
+type BS int
+
+const (
+	SectionReadyForLoad    BS = 0
+	SectionNotReadyForLoad BS = 1
+)
+
 type NT int
 
 const (
