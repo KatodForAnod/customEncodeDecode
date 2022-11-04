@@ -76,7 +76,7 @@ func QOSDecode(b [1]byte) (ql int, e SOrE) {
 }
 
 // SRQEncode 7.2.6.29
-func SRQEncode(ui7 UI7, bs BS) [1]byte {
+func SRQEncode(ui7 UI7, bs BS) [1]byte { //BS warning
 	ui7Byte := byte(ui7) << 1
 	bsByte := byte(bs)
 	union := ui7Byte | bsByte
@@ -84,8 +84,23 @@ func SRQEncode(ui7 UI7, bs BS) [1]byte {
 }
 
 // SRQDecode 7.2.6.29
-func SRQDecode(b [1]byte) (ui7 UI7, bs BS) {
+func SRQDecode(b [1]byte) (ui7 UI7, bs BS) { //BS warning
 	ui7 = UI7(b[0] >> 1)
 	bs = BS(b[0] & 0x01)
+	return ui7, bs
+}
+
+// FRQEncode 7.2.6.28
+func FRQEncode(ui7 UI7, bs int) [1]byte {
+	ui7Byte := byte(ui7) << 1
+	bsByte := byte(bs)
+	union := ui7Byte | bsByte
+	return [1]byte{union}
+}
+
+// FRQDecode 7.2.6.28
+func FRQDecode(b [1]byte) (ui7 UI7, bs int) {
+	ui7 = UI7(b[0] >> 1)
+	bs = int(b[0] & 0x01)
 	return ui7, bs
 }

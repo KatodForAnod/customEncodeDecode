@@ -21,7 +21,7 @@ const (
 	SubstitutionYes SB = 1
 )
 
-type BS int
+type BS int // warning
 
 const (
 	SectionReadyForLoad    BS = 0
