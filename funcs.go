@@ -37,6 +37,23 @@ func SOFDecode(b [1]byte) (int, LFD, FOR, FA) {
 	return int(status), LFD(lfd), FOR(p), FA(fa)
 }
 
+// SCQEncode 7.2.6.30
+func SCQEncode(to4 SCQ1to4, to8 SCQ5to8) [1]byte {
+	to4Byte := byte(to4) << 4
+	to8Byte := byte(to8)
+
+	union := to4Byte | to8Byte
+	return [1]byte{union}
+}
+
+// SCQDecode 7.2.6.30
+func SCQDecode(b [1]byte) (to4 SCQ1to4, to8 SCQ5to8) {
+	to4 = SCQ1to4(b[0] >> 4)
+	to8 = SCQ5to8(b[0] & 0xF)
+
+	return to4, to8
+}
+
 // SRQEncode 7.2.6.29
 func SRQEncode(ui7 UI7, bs BS) [1]byte { //BS warning
 	ui7Byte := byte(ui7) << 1
