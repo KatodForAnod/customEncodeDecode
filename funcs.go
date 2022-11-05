@@ -64,6 +64,22 @@ func QPMDecode(b [1]byte) (kpa int, lpc LPC, pop POP) {
 	return kpa, lpc, pop
 }
 
+// QCCEncode 7.2.6.23
+func QCCEncode(rqt RQT, frz FRZ) [1]byte {
+	rqtByte := byte(rqt) << 2
+	frzByte := byte(frz)
+
+	union := rqtByte | frzByte
+	return [1]byte{union}
+}
+
+// QCCDecode 7.2.6.23
+func QCCDecode(b [1]byte) (rqt RQT, frz FRZ) {
+	rqt = RQT(b[0] >> 2)
+	frz = FRZ(b[0] & 0x03)
+	return rqt, frz
+}
+
 // QOCEncode 7.2.6.26
 func QOCEncode(qu QU, sore SOrE) [1]byte {
 	a := byte(qu) << 1 //qu max = 31;  00 01 11 11 => 00 11 11 10
