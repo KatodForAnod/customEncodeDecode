@@ -37,6 +37,31 @@ func SOFDecode(b [1]byte) (int, LFD, FOR, FA) {
 	return int(status), LFD(lfd), FOR(p), FA(fa)
 }
 
+// LSQEncode 7.2.6.31
+func LSQEncode(to8 AFQ5to8) [1]byte {
+	return [1]byte{byte(to8)}
+}
+
+// LSQDecode 7.2.6.31
+func LSQDecode(b [1]byte) (to8 AFQ5to8, err error) {
+	intConvert := int(b[0])
+
+	switch intConvert {
+	case int(NotUsing):
+		return NotUsing, nil
+	case int(FileTransferNoDeact_AFQ5to8):
+		return FileTransferNoDeact_AFQ5to8, nil
+	case int(FileTransferDeact_AFQ5to8):
+		return FileTransferDeact_AFQ5to8, nil
+	case int(SectionTransferNoDeact_AFQ5to8):
+		return SectionTransferNoDeact_AFQ5to8, nil
+	case int(SectionTransferDeact_AFQ5to8):
+		return SectionTransferDeact_AFQ5to8, nil
+	default:
+		return 0, fmt.Errorf("LSQDecode err: unsupport type")
+	}
+}
+
 // SCQEncode 7.2.6.30
 func SCQEncode(to4 SCQ1to4, to8 SCQ5to8) [1]byte {
 	to4Byte := byte(to4) << 4
