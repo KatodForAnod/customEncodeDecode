@@ -46,8 +46,22 @@ func QPADecode(b [1]byte) (QPA, error) {
 	}
 }
 
-func QPMEncode() {
+// QPMEncode 7.2.6.24
+func QPMEncode(kpa int, lpc LPC, pop POP) [1]byte {
+	kpaByte := byte(kpa) << 2
+	lpcByte := byte(lpc) << 1
+	popByte := byte(pop)
 
+	union := kpaByte | lpcByte | popByte
+	return [1]byte{union}
+}
+
+// QPMDecode 7.2.6.24
+func QPMDecode(b [1]byte) (kpa int, lpc LPC, pop POP) {
+	kpa = int(b[0] >> 2)
+	lpc = LPC((b[0] & 0x02) >> 1)
+	pop = POP(b[0] & 0x01)
+	return kpa, lpc, pop
 }
 
 // QOCEncode 7.2.6.26
