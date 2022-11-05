@@ -162,6 +162,57 @@ func QCCDecode(b [1]byte) (rqt RQT, frz FRZ) {
 	return rqt, frz
 }
 
+// QOIEncode 7.2.6.22
+func QOIEncode(res RES) [1]byte {
+	return [1]byte{byte(res)}
+}
+
+// QOIDecode 7.2.6.22
+func QOIDecode(b [1]byte) (RES, error) {
+	intConvert := int(b[0])
+
+	switch intConvert {
+	case int(NotUsing_RES):
+		return NotUsing_RES, nil
+	case int(StationInterrogation):
+		return StationInterrogation, nil
+	case int(GroupSurvey1):
+		return GroupSurvey1, nil
+	case int(GroupSurvey2):
+		return GroupSurvey2, nil
+	case int(GroupSurvey3):
+		return GroupSurvey3, nil
+	case int(GroupSurvey4):
+		return GroupSurvey4, nil
+	case int(GroupSurvey5):
+		return GroupSurvey5, nil
+	case int(GroupSurvey6):
+		return GroupSurvey6, nil
+	case int(GroupSurvey7):
+		return GroupSurvey7, nil
+	case int(GroupSurvey8):
+		return GroupSurvey8, nil
+	case int(GroupSurvey9):
+		return GroupSurvey9, nil
+	case int(GroupSurvey10):
+		return GroupSurvey10, nil
+	case int(GroupSurvey11):
+		return GroupSurvey11, nil
+	case int(GroupSurvey12):
+		return GroupSurvey12, nil
+	case int(GroupSurvey13):
+		return GroupSurvey13, nil
+	case int(GroupSurvey14):
+		return GroupSurvey14, nil
+	case int(GroupSurvey15):
+		return GroupSurvey15, nil
+	case int(GroupSurvey16):
+		return GroupSurvey16, nil
+	default:
+		return 0, fmt.Errorf("QOIDecode err: unsupport type")
+	}
+}
+
 // COIEncode 7.2.6.21
 func COIEncode(ui7 UI7, bs int) [1]byte {
 	ui7Byte := byte(ui7) << 1
