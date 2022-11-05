@@ -37,6 +37,21 @@ func SOFDecode(b [1]byte) (int, LFD, FOR, FA) {
 	return int(status), LFD(lfd), FOR(p), FA(fa)
 }
 
+// AFQEncode 7.2.6.32
+func AFQEncode(to4 AFQ1to4, to8 AFQ5to8) [1]byte {
+	to4Byte := byte(to4) << 4
+	to8Byte := byte(to8)
+	union := to4Byte | to8Byte
+	return [1]byte{union}
+}
+
+// AFQDecode 7.2.6.32
+func AFQDecode(b [1]byte) (to4 AFQ1to4, to8 AFQ5to8) {
+	to4 = AFQ1to4(b[0] >> 4)
+	to8 = AFQ5to8(b[0] & 0xF)
+	return to4, to8
+}
+
 // LSQEncode 7.2.6.31
 func LSQEncode(to8 AFQ5to8) [1]byte {
 	return [1]byte{byte(to8)}
