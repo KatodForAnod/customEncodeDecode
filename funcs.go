@@ -19,8 +19,35 @@ func QRPDecode(b [1]byte) (QRP, error) {
 	case int(GeneralSetProcessInitState):
 		return GeneralSetProcessInitState, nil
 	default:
-		return 0, fmt.Errorf("unsupport type")
+		return 0, fmt.Errorf("QRPDecode err: unsupport type")
 	}
+}
+
+// QPAEncode 7.2.6.25
+func QPAEncode(qpa QPA) [1]byte {
+	return [1]byte{byte(qpa)}
+}
+
+// QPADecode 7.2.6.25
+func QPADecode(b [1]byte) (QPA, error) {
+	intConvert := int(b[0])
+
+	switch intConvert {
+	case int(NotUsing_QPA):
+		return NotUsing_QPA, nil
+	case int(OnOFFPreloadedParam):
+		return OnOFFPreloadedParam, nil
+	case int(OnOFFParamAddrObj):
+		return OnOFFParamAddrObj, nil
+	case int(OnOFFPermanentTransAddrObj):
+		return OnOFFPermanentTransAddrObj, nil
+	default:
+		return 0, fmt.Errorf("QPADecode err: unsupport type")
+	}
+}
+
+func QPMEncode() {
+
 }
 
 // QOCEncode 7.2.6.26
