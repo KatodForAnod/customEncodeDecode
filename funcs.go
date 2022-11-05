@@ -40,6 +40,16 @@ func SOFDecode(b [1]byte) (int, LFD, FOR, FA) {
 	return int(status), LFD(lfd), FOR(p), FA(fa)
 }
 
+// LOFEncode 7.2.6.35
+func LOFEncode() {
+	/// ???
+}
+
+// LOFDecode 7.2.6.35
+func LOFDecode(b [3]byte) uint32 {
+	return binary.BigEndian.Uint32(b[:])
+}
+
 // NOFEncode 7.2.6.33
 func NOFEncode(name uint16) ([2]byte, error) {
 	data := make([]byte, 2)
