@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"encoding/binary"
+	"fmt"
+)
 
 // QOSEncode 7.2.6.39
 func QOSEncode(ql int, e SOrE) [1]byte {
@@ -35,6 +38,19 @@ func SOFDecode(b [1]byte) (int, LFD, FOR, FA) {
 	p := (b[0] & 0x02) >> 1
 	fa := b[0] & 0x01
 	return int(status), LFD(lfd), FOR(p), FA(fa)
+}
+
+// NOFEncode 7.2.6.33
+func NOFEncode(name uint16) ([2]byte, error) {
+	data := make([]byte, 2)
+	binary.BigEndian.PutUint16(data, name)
+	return [2]byte{data[0], data[1]}, nil
+}
+
+// NOFDecode 7.2.6.33
+func NOFDecode(b [2]byte) uint16 {
+	out := binary.BigEndian.Uint16(b[:])
+	return out
 }
 
 // AFQEncode 7.2.6.32
