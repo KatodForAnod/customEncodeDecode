@@ -40,6 +40,26 @@ func SOFDecode(b [1]byte) (int, LFD, FOR, FA) {
 	return int(status), LFD(lfd), FOR(p), FA(fa)
 }
 
+// CHSEncode 7.2.6.37
+func CHSEncode() {
+	/// ???
+}
+
+// CHSDecode 7.2.6.37
+func CHSDecode() {
+	/// ???
+}
+
+// LOSEncode 7.2.6.36
+func LOSEncode() {
+	/// ???
+}
+
+// LOSDecode 7.2.6.36
+func LOSDecode(b [1]byte) uint8 {
+	return uint8(binary.BigEndian.Uint32(b[:]))
+}
+
 // LOFEncode 7.2.6.35
 func LOFEncode() {
 	/// ???
